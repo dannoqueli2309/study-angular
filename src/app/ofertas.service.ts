@@ -1,10 +1,10 @@
 import { Oferta } from './shared/oferta.model';
 import { HttpClient, HttpResponse } from '@angular/common/http'
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { environment } from '../environments/environment'
 
 import { map, retry } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 // O decorator @injetable é usado para injetar serviços dentro de outro serviço
 
 @Injectable()

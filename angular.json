@@ -28,7 +28,7 @@
               "src/styles.css"
             ],
             "scripts": [
-            "../study-angular/node_modules/pooper/dist/js/pooper.min.js",
+            "../study-angular/node_modules/tether/dist/js/tether.min.js",
             "../study-angular/node_modules/jquery/dist/jquery.min.js",
             "../study-angular/node_modules/bootstrap/dist/js/bootstrap.min.js"
             ]
