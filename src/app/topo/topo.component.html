@@ -8,15 +8,20 @@
           </a>
         </div>
         <div class="col-md-6">
-          {{ofertaArray | json}}
+          <!-- 
+            esse pipe foi criado para retornar o json na tela 
+            {{ofertaArray | json}} 
+          -->
           <input type="text" class="form-control" placeholder="pesquise por ofertas"
           #termoDaPesquisa
           (keyup)="pesquisa(termoDaPesquisa.value)">
           <!-- para criar variaveis de referencia utilize o # na frente da variavel para assim poder capturar o valor do template html e usar na sua classe ts -->
 
-          <ul class="list-group" style ="position: absolute;">
-            <li class="list-group-item" *ngFor="let oferta of ofertaArray">
-              {{oferta.titulo | lowercase}}
+          <ul class="list-group" style ="position: absolute; z-index:999">
+            <li class="list-group-item" *ngFor="let oferta of ofertas | async">
+              <a [routerLink]="['/oferta',oferta.id]" (click)="limpaPesquisa()">
+                {{oferta.titulo | desricaoReduzida:0:15}}
+              </a>
             </li>
           </ul>
         </div>

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ParamMap, Params } from '@angular/router';
 import { interval, Observable, Observer, Subscription } from 'rxjs';
 
 import { OfertasService } from '../ofertas.service';
@@ -9,11 +9,10 @@ import { Oferta } from '../shared/oferta.model';
   selector: 'app-oferta',
   templateUrl: './oferta.component.html',
   styleUrls: ['./oferta.component.css'],
-  providers: [OfertasService]
+  providers: [OfertasService],
 })
 export class OfertaComponent implements OnInit, OnDestroy {
-
-  // quando ele construir o componente de routeamento do componente 
+  // quando ele construir o componente de routeamento do componente
 
   // // Para guardar o valor do meu subscribe
   // private tempoObservableSubscription: Subscription;
@@ -25,16 +24,21 @@ export class OfertaComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private ofertaService: OfertasService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    console.log(this.route.snapshot.params['id']);
-    this.ofertaService.getOfertasPorId(this.route.snapshot.params['id']).then((oferta: Oferta) => {
-      this.oferta = oferta;
-      console.log(this.oferta);
-    })
+    this.route.params.subscribe((parametros: Params) => {
+      console.log(this.route.params['id']);
 
-    // // O Activete route fica observando eternamente o objeto observado 
+      this.ofertaService
+        .getOfertasPorId(parametros.id)
+        .then((oferta: Oferta) => {
+          this.oferta = oferta;
+          console.log(this.oferta);
+        });
+    });
+
+    // // O Activete route fica observando eternamente o objeto observado
     // // logo a instrução complete nunca é chamado
     // this.route.params.subscribe(
     //   (parameters: any) => console.log(parameters),
@@ -51,7 +55,7 @@ export class OfertaComponent implements OnInit, OnDestroy {
     //   console.log(intervalo);
     // })
 
-    // // Observable que será observado 
+    // // Observable que será observado
     // let meuObservable = Observable.create((observer: Observer<number>) => {
     //   observer.next(2);// dispara um evennto no fluxo de eventos do meu observavel
     //   observer.next(3);
@@ -71,8 +75,5 @@ export class OfertaComponent implements OnInit, OnDestroy {
     // )
   }
 
-  ngOnDestroy() {
-  }
-
-
+  ngOnDestroy() {}
 }

@@ -12,9 +12,7 @@ import { catchError, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/
 })
 export class TopoComponent implements OnInit {
   
-  public ofertas: Observable<Oferta[]>
-
-  public ofertaArray: Oferta[];
+  public ofertas: Observable<Oferta[]> /// dispara a stream de eventos 
   
   private subjectPesquisa: Subject<string> = new Subject<string>();
 
@@ -41,8 +39,6 @@ export class TopoComponent implements OnInit {
       return of([]);
     }))
     
-    this.ofertas.subscribe((ofertas:Array<Oferta>)=>
-    this.ofertaArray = ofertas);
   }
 
   /// recebe um evento que é digitado no input
@@ -60,5 +56,9 @@ export class TopoComponent implements OnInit {
     // ()=> console.log('Fluxo de eventos completo'));
     console.log('keyup caracter:',termoDaPesquisa);
     this.subjectPesquisa.next(termoDaPesquisa)
+  }
+
+  public limpaPesquisa():void{
+    this.subjectPesquisa.next('')
   }
 }
