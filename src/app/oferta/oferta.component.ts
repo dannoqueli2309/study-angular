@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Params } from '@angular/router';
 import { interval, Observable, Observer, Subscription } from 'rxjs';
+import CarrinhoService from '../carrinho.service';
 
 import { OfertasService } from '../ofertas.service';
 import { Oferta } from '../shared/oferta.model';
@@ -9,7 +10,7 @@ import { Oferta } from '../shared/oferta.model';
   selector: 'app-oferta',
   templateUrl: './oferta.component.html',
   styleUrls: ['./oferta.component.css'],
-  providers: [OfertasService],
+  providers: [OfertasService, CarrinhoService],
 })
 export class OfertaComponent implements OnInit, OnDestroy {
   // quando ele construir o componente de routeamento do componente
@@ -23,7 +24,8 @@ export class OfertaComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private ofertaService: OfertasService
+    private ofertaService: OfertasService,
+    private carrinhoService: CarrinhoService
   ) {}
 
   ngOnInit(): void {
@@ -37,6 +39,11 @@ export class OfertaComponent implements OnInit, OnDestroy {
           console.log(this.oferta);
         });
     });
+
+    console.log(
+      'Itens que foi adicionado no carrinho',
+      this.carrinhoService.exibirItens()
+    );
 
     // // O Activete route fica observando eternamente o objeto observado
     // // logo a instrução complete nunca é chamado
@@ -73,6 +80,11 @@ export class OfertaComponent implements OnInit, OnDestroy {
     //   (error: String) => console.log(error),
     //   () => console.log('Stream de eventos foi finalizado')
     // )
+  }
+
+  public adicionarItemCarrinho(): void {
+    
+    this.carrinhoService.incluirItem(this.oferta);
   }
 
   ngOnDestroy() {}

@@ -1,10 +1,10 @@
 export class Oferta {
-    public id: Number;
-    public categoria: String;
-    public titulo: String;
+    public id: number;
+    public categoria: string;
+    public titulo: string;
     public descricao_oferta: string;
-    public anunciante: String;
-    public valor: Number;
-    public destaque: Boolean;
+    public anunciante: string;
+    public valor: number;
+    public destaque: boolean;
     public imagens: Array<Object>;
 }
