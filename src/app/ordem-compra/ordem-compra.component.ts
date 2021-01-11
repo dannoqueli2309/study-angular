@@ -36,25 +36,38 @@ export class OrdemCompraComponent implements OnInit {
 
   ngOnInit() {
     this.itensCarrinho = this.carrinhoService.exibirItens();
-    console.log("Quantidades de Itens no carrinho", this.itensCarrinho)
+    console.log('Quantidades de Itens no carrinho', this.itensCarrinho);
   }
 
   public confirmarCompra(): void {
     if (this.formulario.status === 'INVALID') {
-      console.log('Formulario está inválido');
-
       this.formulario.get('endereco').markAsTouched();
       this.formulario.get('numero').markAsTouched();
       this.formulario.get('formaPagamento').markAsTouched();
       this.formulario.get('complemento').markAsTouched();
     } else {
-      console.log('Formulario está valido');
-      this.ordemCompraService
-        .efetivaCompra(this.formulario.value)
-        .subscribe((idDoPedido) => {
-          console.log(idDoPedido);
-          this.idPedidoCompra = idDoPedido;
-        });
+      if (this.carrinhoService.exibirItens().length == 0) {
+        alert('você não selecionou nenhum item!');
+      } else {
+        
+        let pedido:Pedido = this.formulario.value;
+        pedido.itensCarrinho = this.carrinhoService.exibirItens(); 
+
+        this.ordemCompraService
+          .efetivaCompra(pedido)
+          .subscribe((idDoPedido) => {
+            this.idPedidoCompra = idDoPedido;
+            this.carrinhoService.limpaCarrinho();
+          });
+      }
     }
+  }
+
+  public adicionar(item: ItemCarrinho): void {
+    this.carrinhoService.adicionarQuantidade(item);
+  }
+
+  public diminuindo(item: ItemCarrinho): void {
+    this.carrinhoService.diminuindoQuantidade(item);
   }
 }

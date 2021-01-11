@@ -4,7 +4,7 @@
     
       <h5>Sua Compra</h5>
       <hr />
-
+      <div *ngIf="carrinhoService.exibirItens().length; else carrinhoVazio">
       <div *ngFor="let itemCarinho of itensCarrinho" class="form-row" style="background: #FAFAFA; padding: 20px; border-bottom: solid 1px #F0F0F0">
         <div class="form-group col-sm-1">
           <img [src]="itemCarinho.img.url" class="img-fluid">
@@ -18,9 +18,11 @@
         <div>
           <div class="row">
             <div class="col">
-              <button type="button" class="btn btn-link">-</button>
-              {{itemCarinho.quantidade}}
-              <button type="button" class="btn btn-link">+</button>
+              <button (click)="diminuindo(itemCarinho)" 
+              type="button" 
+              class="btn btn-link">-</button>
+                {{itemCarinho.quantidade}}
+              <button (click)="adicionar(itemCarinho)" type="button" class="btn btn-link">+</button>
             </div>
           </div>
         </div>
@@ -31,12 +33,19 @@
       </div>
 
       <div class="form-row">
-        <div class="form-group col d-flex justify-content-end">
-          <h4>Total do pedido: 61.80</h4>
-        </div>
+          <div class="form-group col d-flex justify-content-end">
+            <h4>Total do pedido: {{carrinhoService.totalCarrinhoCompras()| currency: 'BRL'}}</h4>
+          </div>
       </div>
       <br />
+    </div>
 
+    <ng-template #carrinhoVazio >
+      <div class="form-group col d-flex justify-center">
+        <h4>Vish :|| você não tem ofertas. Para voltar ao menu inicial basta clicar no icone do pássaro urbano</h4>
+      </div>
+    </ng-template>
+    
       <h5>Dados de entrega</h5>
       <hr />
 
