@@ -1,26 +1,24 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, LOCALE_ID } from '@angular/core';
-
-import { ROUTES } from './app.router';
-
-import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { TopoComponent } from './topo/topo.component';
-import { RodapeComponent } from './rodape/rodape.component';
-import { HomeComponent } from './home/home.component';
-import { RestaurantesComponent } from './restaurantes/restaurantes.component';
-import { DiversaoComponent } from './diversao/diversao.component';
-import { OfertaComponent } from './oferta/oferta.component';
-import { ComoUsarComponent } from './oferta/como-usar/como-usar.component';
-import { OndeFicaComponent } from './oferta/onde-fica/onde-fica.component';
 import { registerLocaleData } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import localesPT from '@angular/common/locales/pt';
-import { DescricaoReduzida } from './util/descricao-reduzida.pipe';
-import { OrdemCompraComponent } from './ordem-compra/ordem-compra.component';
+import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
+
+import { AppComponent } from './app.component';
+import { ROUTES } from './app.router';
+import { DiversaoComponent } from './diversao/diversao.component';
+import { HomeComponent } from './home/home.component';
+import { ComoUsarComponent } from './oferta/como-usar/como-usar.component';
+import { OfertaComponent } from './oferta/oferta.component';
+import { OndeFicaComponent } from './oferta/onde-fica/onde-fica.component';
 import { OrdemCompraSucessoComponent } from './ordem-compra-sucesso/ordem-compra-sucesso.component';
-import { FormsModule } from '@angular/forms';
+import { OrdemCompraComponent } from './ordem-compra/ordem-compra.component';
+import { RestaurantesComponent } from './restaurantes/restaurantes.component';
+import { RodapeComponent } from './rodape/rodape.component';
+import { TopoComponent } from './topo/topo.component';
+import { DescricaoReduzida } from './util/descricao-reduzida.pipe';
 
 registerLocaleData(localesPT);
 
@@ -45,7 +43,7 @@ registerLocaleData(localesPT);
     HttpClientModule,
     ///Forroot(Rotas genericas) vs forchild
     RouterModule.forRoot(ROUTES),
-    FormsModule
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

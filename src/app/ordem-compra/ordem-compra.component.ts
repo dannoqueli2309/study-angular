@@ -1,40 +1,51 @@
-import { Component, OnInit, ViewChild} from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { OrdemCompraService } from '../ordem-compra.service'
-import { Pedido } from '../shared/pedido.model'
+import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { OrdemCompraService } from '../ordem-compra.service';
+import { Pedido } from '../shared/pedido.model';
 
 @Component({
   selector: 'app-ordem-compra',
   templateUrl: './ordem-compra.component.html',
   styleUrls: ['./ordem-compra.component.css'],
-  providers: [ OrdemCompraService ]
+  providers: [OrdemCompraService],
 })
 export class OrdemCompraComponent implements OnInit {
-  /// Nesse caso nós estamos olhando as alterações do formulario e recuperando o formulario do HTML
-  @ViewChild("formulario") public formulario: NgForm
-
   public idPedidoCompra: number;
 
-  constructor(private ordemCompraService: OrdemCompraService) { }
+  public formulario: FormGroup = new FormGroup({
+    endereco: new FormControl(null, [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(120),
+    ]),
+    numero: new FormControl(null, [
+      Validators.required,
+      Validators.minLength(1),
+      Validators.maxLength(20),
+    ]),
+    formaPagamento: new FormControl(null, [Validators.required]),
+    complemento: new FormControl(null),
+  });
+  constructor(private ordemCompraService: OrdemCompraService) {}
 
-  ngOnInit() {
-    
-  }
+  ngOnInit() {}
 
-  public confirmaCompra(){
-    /// Os atributos pristine e dirty são estados do atributo do formulario 
+  public confirmarCompra(): void {
+    if (this.formulario.status === 'INVALID') {
+      console.log('Formulario está inválido');
 
-    // O atributo pristine é para informar que o campo não foi alterado
-
-    // O atributo dirty se o campo foi adicionado mesmo que ele seja excluido esse campo passa a ser dirty
-
-    // O angular atribui algumas classes CSS para que possa ser alterado na folha de estilo CSS
-    ///ng-invalid, ng-valid, 
-    console.log(this.formulario);
-    this.ordemCompraService.efetivaCompra(this.formulario.form.value)
-    .subscribe((idPedido)=>{
-      console.log("o id do pedido é esse:",idPedido)
-      this.idPedidoCompra = idPedido;
-    })
+      this.formulario.get('endereco').markAsTouched();
+      this.formulario.get('numero').markAsTouched();
+      this.formulario.get('formaPagamento').markAsTouched();
+      this.formulario.get('complemento').markAsTouched();
+    } else {
+      console.log('Formulario está valido');
+      this.ordemCompraService
+        .efetivaCompra(this.formulario.value)
+        .subscribe((idDoPedido) => {
+          console.log(idDoPedido);
+          this.idPedidoCompra = idDoPedido;
+        });
+    }
   }
 }
