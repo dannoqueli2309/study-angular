@@ -1,7 +1,7 @@
 import { registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import localesPT from '@angular/common/locales/pt';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
@@ -51,7 +51,7 @@ registerLocaleData(localesPT);
     RouterModule.forRoot(ROUTES),
     ReactiveFormsModule
   ],
-  providers: [CarrinhoService],
+  providers: [CarrinhoService, {provide: LOCALE_ID,useValue:'pt-Br'}],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
