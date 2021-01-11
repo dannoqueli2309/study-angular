@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Params } from '@angular/router';
 import { interval, Observable, Observer, Subscription } from 'rxjs';
-import CarrinhoService from '../carrinho.service';
+import { CarrinhoService } from '../carrinho.service';
 
 import { OfertasService } from '../ofertas.service';
 import { Oferta } from '../shared/oferta.model';
@@ -10,7 +10,7 @@ import { Oferta } from '../shared/oferta.model';
   selector: 'app-oferta',
   templateUrl: './oferta.component.html',
   styleUrls: ['./oferta.component.css'],
-  providers: [OfertasService, CarrinhoService],
+  providers: [OfertasService],
 })
 export class OfertaComponent implements OnInit, OnDestroy {
   // quando ele construir o componente de routeamento do componente
@@ -83,8 +83,8 @@ export class OfertaComponent implements OnInit, OnDestroy {
   }
 
   public adicionarItemCarrinho(): void {
-    
     this.carrinhoService.incluirItem(this.oferta);
+    console.log(this.carrinhoService.exibirItens());
   }
 
   ngOnDestroy() {}

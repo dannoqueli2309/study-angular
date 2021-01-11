@@ -16,9 +16,16 @@ class CarrinhoService {
       oferta.valor,
       1
     );
+    let itemCarrinhoEncontrado = this.itens.find((item) => item.id === itemCarrinho.id);
 
-    console.log('O valor do item carrinho', itemCarrinho);
+    if(itemCarrinhoEncontrado){
+      itemCarrinhoEncontrado.quantidade +=1;
+    }else{
+      this.itens.push(itemCarrinho);
+    }
+
+    console.log('itens carrinho', this.itens);
   }
 }
 
-export default CarrinhoService;
+export { CarrinhoService };

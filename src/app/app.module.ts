@@ -6,6 +6,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 
+/// Não devemos fazer importaçao default dentro do app module provoca uma instacia da classe logo o angular vai acusar um erro 
+
+//Sempre importar algo dentro de app module use a sintaxe de distribution assigment
+
+import { CarrinhoService } from '../app/carrinho.service' 
+
 import { AppComponent } from './app.component';
 import { ROUTES } from './app.router';
 import { DiversaoComponent } from './diversao/diversao.component';
@@ -45,7 +51,7 @@ registerLocaleData(localesPT);
     RouterModule.forRoot(ROUTES),
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [CarrinhoService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
